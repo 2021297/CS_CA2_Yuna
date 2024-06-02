@@ -237,4 +237,7 @@ document.addEventListener('DOMContentLoaded', () => {
     socket.emit('requestBoardUpdate'); // Emit an event to request initial board state from the server
 });
 
-
+socket.on('updateRound', (round) => {
+    // Code to update the round on the client side
+    console.log('Current Round:', round);
+});

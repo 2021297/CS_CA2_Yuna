@@ -9,7 +9,7 @@ const io = socketIo(server);
 let board = Array.from({ length: 10 }, () => Array(10).fill(null));
 let turnOrder = [];
 let currentPlayerIndex = 0;
-let round = 1;
+let round = 0; // Initialize the round counter
 let removedMonstersCount = [0, 0]; // Initialize removed monsters count for two players
 let players = [];
 
@@ -39,8 +39,6 @@ io.on('connection', (socket) => {
             }
         }
     });
-    
-
     
     // Send initial board state
     socket.emit('updateBoard', board);
@@ -88,8 +86,14 @@ io.on('connection', (socket) => {
         }
         currentPlayerIndex = (currentPlayerIndex + 1) % players.length;
         io.emit('setTurn', currentPlayerIndex);
+        if (currentPlayerIndex === 0) {
+            round++;
+            io.emit('updateRound', round); // Notify clients of the new round
+        }
+
         io.emit('updateBoard', board);
     });
+      
 
    socket.on('disconnect', () => {
         console.log('A user disconnected');
