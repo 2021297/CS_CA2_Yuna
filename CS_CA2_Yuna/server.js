@@ -209,9 +209,13 @@ function resetGame() {
     board = Array.from({ length: 10 }, () => Array(10).fill(null));
     removedMonstersCount = [0, 0];
     round = 0;
+    currentPlayerIndex = 0;
+    initializeTurnOrder(); // Reinitialize turn order to ensure fairness in the new game
     io.emit('updateBoard', board);
     io.emit('updateRemovedMonstersCount', removedMonstersCount);
     io.emit('updateRound', round);
+    io.emit('setTurn', currentPlayerIndex);
+    io.emit('message', 'New round starting!'); // Inform players of the new round
 }
 
 server.listen(3000, () => {
