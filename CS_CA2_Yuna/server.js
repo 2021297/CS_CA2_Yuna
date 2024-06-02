@@ -187,10 +187,31 @@ function isValidMove(monster, fromRow, fromCol, toRow, toCol) {
 function checkWinLoss() {
     for (let i = 0; i < players.length; i++) {
         if (removedMonstersCount[i] >= 10) {
-            io.emit('gameOver', i === 0 ? 1 : 0); // Notify clients of the winning player index
+            const winnerIndex = i === 0 ? 1 : 0;
+            const loserIndex = i;
+
+            // Update game statistics
+            gameStats.totalGames += 1;
+            gameStats.wins[winnerIndex] += 1;
+            gameStats.losses[loserIndex] += 1;
+
+            io.emit('gameOver', winnerIndex); // Notify clients of the winning player index
+            io.emit('updateStats', gameStats); // Send updated statistics to clients
+
+            // Reset the board and player states for a new game or stop the game
+            resetGame();
             break;
         }
     }
+}
+// Function to reset the game state
+function resetGame() {
+    board = Array.from({ length: 10 }, () => Array(10).fill(null));
+    removedMonstersCount = [0, 0];
+    round = 0;
+    io.emit('updateBoard', board);
+    io.emit('updateRemovedMonstersCount', removedMonstersCount);
+    io.emit('updateRound', round);
 }
 
 server.listen(3000, () => {
