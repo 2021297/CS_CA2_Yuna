@@ -12,6 +12,11 @@ let currentPlayerIndex = 0;
 let round = 0; // Initialize the round counter
 let removedMonstersCount = [0, 0]; // Initialize removed monsters count for two players
 let players = [];
+let gameStats = {
+    totalGames: 0,
+    wins: [0, 0],
+    losses: [0, 0]
+};
 
 app.use(express.static('public'));
 

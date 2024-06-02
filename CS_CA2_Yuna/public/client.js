@@ -188,8 +188,11 @@ socket.on('gameOver', (winnerIndex) => {
     const ghostButton = document.getElementById('monster-btn.ghost');
     ghostButton.disabled = true;
 });
-
-
+// Event listener for receiving game statistics
+socket.on('updateGameStats', (stats) => {
+    document.getElementById('totalGames').textContent = stats.totalGames;
+    document.getElementById('player1Wins').textContent = stats
+});
 // Event listener for board clicks
 document.getElementById('board').addEventListener('click', handleSquareClick);
 
