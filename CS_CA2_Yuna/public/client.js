@@ -211,4 +211,30 @@ document.getElementById('endTurnButton').addEventListener('click', () => {
     }
 });
 
+// Event listener for submitting chat messages
+document.getElementById('chatForm').addEventListener('submit', (event) => {
+    event.preventDefault();
+    const messageInput = document.getElementById('chatMessage');
+    const message = messageInput.value;
+    socket.emit('chatMessage', { playerIndex: myIndex, message }); // Include playerIndex
+    messageInput.value = '';
+});
+
+
+// Event listener for receiving chat messages
+socket.on('chatMessage', (message) => {
+    const chatBox = document.getElementById('chatBox');
+    const messageElement = document.createElement('div');
+    messageElement.textContent = message;
+    chatBox.appendChild(messageElement);
+    chatBox.scrollTop = chatBox.scrollHeight;
+});
+
+
+// Log initial board setup to ensure the DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
+    console.log('DOM fully loaded and parsed');
+    socket.emit('requestBoardUpdate'); // Emit an event to request initial board state from the server
+});
+
 
