@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monster Mayhem</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>        
+        <h1>Monster Mayhem</h1>
+        <div id="turnNotification"><b>Loading...</b></div>
+        <div id="playerIndex"></div>
+        <div>Round Number: <span id="round">1</span></div>
+        <div id="monsterButtons">
+            <button class="monster-btn" data-type="vampire" style="background-color: red;">Vampire</button>
+            <button class="monster-btn" data-type="werewolf" style="background-color: green;">Werewolf</button>
+            <button class="monster-btn" data-type="ghost" style="background-color: blue;">Ghost</button>
+        </div>
+        <div id="monsterAction">Click on a monster to place on the board</div>
+        <button id="endTurnButton" disabled>End Turn</button>
+        </div>  
+        <div class="game-container">
+             <div id="player1Info" class="player-info">
+               Player 1: <span id="player1Removed">0</span> /10 monsters removed
+             </div>
+             <div id="board" class="board"></div>
+             <div id="player2Info" class="player-info">
+               Player 2: <span id="player2Removed">0</span> /10 monsters removed
+             </div>
+        </div>
+         
+        <div class="chat-container">
+            <div id="chatBox" class="chat-box"></div>
+            <form id="chatForm" class="chat-form">
+            <input type="text" id="chatMessage" placeholder="Type your message" required>
+            <button type="submit">Send</button>
+            </form>
+        </div>
+
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="client.js"></script>
+</body>
+</html>
